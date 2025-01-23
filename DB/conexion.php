@@ -3,7 +3,7 @@
 $host = '172.21.0.2'; // Cambiar si usas un servidor remoto
 $user = 'manhwas'; // Usuario de MySQL
 $password = '261205'; // Contraseña de MySQL
-$dbname = 'biblioteca_manhwas'; // Nombre de la base de datos
+$dbname = 'ManhwasDB'; // Nombre de la base de datos
 
 try {
     // Crear una nueva conexión PDO
