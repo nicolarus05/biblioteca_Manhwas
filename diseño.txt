@@ -1,0 +1,9 @@
+biblioteca/
+├── index.php         # Página principal (Inicio)
+├── biblioteca.php    # Lista de manhwas
+├── detalle.php       # Detalle de un manhwa
+├── historial.php     # Historial de lectura
+├── css/style.css     # Estilos CSS
+├── js/script.js      # JavaScript
+├── db.php            # Conexión a la base de datos
+└── api.php           # API para manejar las solicitudes AJAX
