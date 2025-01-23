@@ -16,6 +16,6 @@ try {
     echo "Conexión exitosa a la base de datos.";
 } catch (PDOException $e) {
     // Capturar errores de conexión
-    die("Error de conexión: " . $e->getMessage());
+    echo("Error de conexión: " . $e->getMessage());
 }
 ?>
