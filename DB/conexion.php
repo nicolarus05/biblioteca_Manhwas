@@ -13,7 +13,6 @@ try {
     // Configurar el modo de errores de PDO
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    echo "Conexión exitosa a la base de datos.";
 } catch (PDOException $e) {
     // Capturar errores de conexión
     echo("Error de conexión: " . $e->getMessage());
