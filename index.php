@@ -1,15 +1,6 @@
 <?php
 session_start();
 
-//si el usuario no se ha logeado redirigirse al login, sino redirigirse al registro
-if(!isset($_SESSION['login'])){
-    header('Location: /usuarios/login.php');
-    exit();
-}else{
-    header('Location: /usuarios/registro.php');
-    exit();
-}
-
 require_once './seguridad/conexion.php';
 
 /**

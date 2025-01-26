@@ -2,28 +2,36 @@
 session_start();
 require_once '../seguridad/conexion.php';
 
-//si el usuario esta logeado redirigirlo al index
-if (isset($_SESSION['usuario_id'])) {
-    header('Location: index.php');
+//crear una instancia de la conexion
+$db = new conexion();
+$conexion = $db->getConexion();
+
+//si el usuario ya está logeado, redirigirlo al index
+if (isset($_SESSION['logeado'])) {
+    header('Location: login.php');
     exit();
 }
 
-//Funcion para registrar al usuario
-function registro($conexion, $nombre, $apellidos, $edad, $correo, $login, $password){
-    $password = password_hash($password, PASSWORD_DEFAULT);
+//funcion para registrar al usuario
+function registro($conexion, $nombre, $apellidos, $edad, $correo, $login, $password) {
+    $salt=random_int(10000000,99999999);
+    $password = password_hash($password.$salt,PASSWORD_DEFAULT);
 
     try {
-        $stmt = $conexion->prepare("insert INTO `usuario`(`nombre`, `apellidos`, `edad`, `correo`, `login`, `password`, `rol`) 
-            VALUES (?, ?, ?, ?, ?, ?, 'user')");
-        $stmt->execute([$nombre, $apellidos, $edad, $correo, $login, $password]);
+        $stmt = $conexion->prepare("INSERT INTO usuario (nombre, apellidos, edad, correo, login, password, salt, rol) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, 'usuario')");
+        $stmt->execute([$nombre, $apellidos, $edad, $correo, $login, $password, $salt]);
 
-        echo "Usuario registrado con éxito.";
+        //si el usuario se ha creado con exito, redirigirlo para que incie sesion
+        $_SESSION['logeado'] = true;
+        header('Location: login.php'); //redirigir al login
+        exit();
     } catch (Exception $e) {
-        echo("Error al registrar usuario: " . $e->getMessage());
+        echo "Error al registrar usuario: " . $e->getMessage();
     }
 }
 
-//comprobamos que el formulario de registro a sido enviado.
+//comprobamos que el formulario de registro ha sido enviado.
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nombre = filter_input(INPUT_POST, 'nombre', FILTER_SANITIZE_STRING);
     $apellidos = filter_input(INPUT_POST, 'apellidos', FILTER_SANITIZE_STRING);
