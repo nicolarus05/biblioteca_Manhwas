@@ -1,7 +1,30 @@
 <?php
+session_start();
 require_once '../seguridad/conexion.php';
+require_once '../seguridad/seguridad.php';
 
+//crear una instancia de la conexion y de seguridad
+$db = new conexion();
+$conexion = $db->getConexion();
+$segura = new seguridad($conexion);
 
+//si el usuario no esta registrad, redirigirlo a que se registre
+if (!isset($_SESSION['registrado'])) {
+    header('Location: registro.php');
+    exit();
+}
+
+if(isset($_POST['login'])){
+    $usuario = $_POST['usuario'];
+    $password = $_POST['password'];
+
+    if($segura->login($usuario, $password)){
+        $_SESSION['logeado'] = true;
+        header('Location: perfil.php');
+    }else{
+        echo "El usuario no existe";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -19,14 +42,14 @@ require_once '../seguridad/conexion.php';
             <legend>Inicio de Sesion</legend>
 
             <label for="login">Nombre de usuario </label>
-            <input type="text" id="username" required placeholder="nombre usuario"/>
+            <input type="text" id="username" name="usuario" required placeholder="nombre usuario"/>
             <br>
 
             <label for="password">Contraseña </label>
-            <input type="password" id="password" required placeholder="contraseña usuario"/>
+            <input type="password" id="password" name="password" required placeholder="contraseña usuario"/>
         </fieldset>
 
-        <input type="submit" value="Enviar" id="enviar"/>   
+        <input type="submit" value="Enviar" name="login"/>   
     </form>
 </body>
 </html>

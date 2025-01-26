@@ -7,7 +7,7 @@ $db = new conexion();
 $conexion = $db->getConexion();
 
 //si el usuario ya está logeado, redirigirlo al index
-if (isset($_SESSION['logeado'])) {
+if (isset($_SESSION['registrado'])) {
     header('Location: login.php');
     exit();
 }
@@ -23,7 +23,7 @@ function registro($conexion, $nombre, $apellidos, $edad, $correo, $login, $passw
         $stmt->execute([$nombre, $apellidos, $edad, $correo, $login, $password, $salt]);
 
         //si el usuario se ha creado con exito, redirigirlo para que incie sesion
-        $_SESSION['logeado'] = true;
+        $_SESSION['registrado'] = true;
         header('Location: login.php'); //redirigir al login
         exit();
     } catch (Exception $e) {
