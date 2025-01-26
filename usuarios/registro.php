@@ -55,43 +55,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
+    <link rel="stylesheet" href="../css/registro.css">
 </head>
 <body>
-<h1>Formulario de registro de los usuarios</h1>
+    <form action="" method="POST">
+        <h1>Formulario de Registro</h1>
+        <fieldset>
+            <legend>Datos Personales</legend>
 
-<form action="" method="POST">
-    <fieldset>
-        <legend>Datos Personales</legend>
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Introduzca su nombre" required>
 
-        <label for="nombre">Nombre</label>
-        <input type="text" id="nombre" name="nombre" placeholder="Introduzca su nombre" required>
-        <br>
+            <label for="apellidos">Apellidos</label>
+            <input type="text" id="apellidos" name="apellidos" placeholder="Introduzca sus apellidos" required>
 
-        <label for="apellidos">Apellidos</label>
-        <input type="text" id="apellidos" name="apellidos" placeholder="Introduzca sus apellidos" required>
-        <br>
+            <label for="edad">Edad</label>
+            <input type="number" id="edad" name="edad" placeholder="Introduzca su edad" required>
 
-        <label for="edad">Edad</label>
-        <input type="number" id="edad" name="edad" placeholder="Introduzca su edad" required>
-        <br>
+            <label for="correo">Correo Electrónico</label>
+            <input type="email" id="correo" name="correo" placeholder="Introduzca un email" required>
+        </fieldset>
 
-        <label for="correo">Correo Electrónico</label>
-        <input type="email" id="correo" name="correo" placeholder="Introduzca un email" required>
-    </fieldset>
+        <fieldset>
+            <legend>Datos de Usuario</legend>
 
-    <fieldset>
-        <legend>Datos de Usuario</legend>
+            <label for="username">Nombre de Usuario</label>
+            <input type="text" id="username" name="username" placeholder="Introduzca su nombre de usuario" required>
 
-        <label for="username">Nombre de Usuario</label>
-        <input type="text" id="username" name="username" placeholder="Introduzca su nombre de usuario" required>
-        <br>
+            <label for="password">Contraseña</label>
+            <input type="password" id="password" name="password" placeholder="Introduzca su contraseña" required>
+        </fieldset>
 
-        <label for="password">Contraseña</label>
-        <input type="password" id="password" name="password" placeholder="Introduzca su contraseña" required>
-        <br>
-    </fieldset>
-
-    <input type="submit" value="Registrar">
-</form>
+        <input type="submit" value="Registrar">
+    </form>
 </body>
 </html>
+

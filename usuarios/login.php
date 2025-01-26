@@ -14,17 +14,23 @@ if (!isset($_SESSION['registrado'])) {
     exit();
 }
 
-if(isset($_POST['login'])){
-    $usuario = $_POST['usuario'];
-    $password = $_POST['password'];
+if (isset($_POST['login'])) {
 
-    if($segura->login($usuario, $password)){
-        $_SESSION['logeado'] = true;
-        header('Location: perfil.php');
-    }else{
-        echo "El usuario no existe";
+    //verifico que los datos no son nulos
+    if (!empty($usuario) && !empty($password)) {
+        //verificamos si el usuario existe
+        if ($segura->login($usuario, $password)) {
+            $_SESSION['logeado'] = true;
+            header('Location: ../index.php');
+            exit();
+        } else {
+            echo "El usuario o la contraseña son incorrectos.";
+        }
+    } else {
+        echo "Por favor, rellene todos los campos.";
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -32,24 +38,24 @@ if(isset($_POST['login'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio de sesion</title>
+    <title>Inicio de sesión</title>
+    <link rel="stylesheet" href="../css/login.css">
 </head>
 <body>
-    <h1>Inicio de Sesion</h1>
-
     <form action="post">
+        <h1>Inicio de Sesión</h1>
         <fieldset>
-            <legend>Inicio de Sesion</legend>
+            <legend>Inicio de Sesión</legend>
 
-            <label for="login">Nombre de usuario </label>
-            <input type="text" id="username" name="usuario" required placeholder="nombre usuario"/>
-            <br>
+            <label for="login">Nombre de usuario</label>
+            <input type="text" id="username" name="usuario" required placeholder="nombre usuario">
 
-            <label for="password">Contraseña </label>
-            <input type="password" id="password" name="password" required placeholder="contraseña usuario"/>
+            <label for="password">Contraseña</label>
+            <input type="password" id="password" name="password" required placeholder="contraseña usuario">
         </fieldset>
 
-        <input type="submit" value="Enviar" name="login"/>   
+        <input type="submit" value="Enviar" name="login">
     </form>
 </body>
 </html>
+

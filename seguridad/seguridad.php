@@ -25,29 +25,37 @@ class seguridad {
     }
 
     public function login($login, $password) {
+        // Sanitizamos el campo de entrada
         $login = filter_var($login, FILTER_SANITIZE_STRING);
-
-        //consulta segura con parámetros
-        $sql = "select * FROM usuario WHERE id = :id";
+    
+        // Consulta segura con parámetros preparados
+        $sql = "select * FROM usuario WHERE login = :login";
         $stmt = $this->conexion->prepare($sql);
         $stmt->bindParam(':login', $login, PDO::PARAM_STR);
         $stmt->execute();
-
+    
+        // Obtenemos el usuario (si existe)
         $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-
+    
         if ($usuario) {
-            //verificamos la contraseña con password_verify
-            if (password_verify($password.$usuario['salt'], $usuario['password'])) {
+            // Verificamos la contraseña concatenando el salt y utilizando password_verify
+            if (password_verify($password . $usuario['salt'], $usuario['password'])) {
+                // Configuramos variables de sesión
                 $_SESSION['usuario'] = $usuario['login'];
                 $_SESSION['rol'] = $usuario['rol'];
+    
+                // Guardamos estado en las propiedades de la clase (si las necesitas)
                 $this->session = true;
                 $this->usuario = $usuario['login'];
                 $this->rol = $usuario['rol'];
-                return true;
+    
+                return true; // Login exitoso
             }
         }
-        return false; //credenciales incorrectas
+    
+        return false; // Credenciales incorrectas
     }
+    
 
     public function logout() {
         $this->session = false;
