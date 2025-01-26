@@ -48,10 +48,10 @@ if (isset($_POST['login'])) {
             <legend>Inicio de Sesión</legend>
 
             <label for="login">Nombre de usuario</label>
-            <input type="text" id="username" name="usuario" required placeholder="nombre usuario">
+            <input type="text" id="username" name="usuario" required>
 
             <label for="password">Contraseña</label>
-            <input type="password" id="password" name="password" required placeholder="contraseña usuario">
+            <input type="password" id="password" name="password" required>
         </fieldset>
 
         <input type="submit" value="Enviar" name="login">
