@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php';
+require_once './config.php';
 
 class conexion{
     //atributo de la clase conexion

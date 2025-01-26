@@ -1,5 +1,16 @@
 <?php
-require_once '../seguridad/conexion.php';
+session_start();
+
+//si el usuario no se ha logeado redirigirse al login, sino redirigirse al registro
+if(!isset($_SESSION['login'])){
+    header('Location: /usuarios/login.php');
+    exit();
+}else{
+    header('Location: /usuarios/registro.php');
+    exit();
+}
+
+require_once './seguridad/conexion.php';
 
 /**
  * TODO
@@ -14,7 +25,7 @@ require_once '../seguridad/conexion.php';
 ?>
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
