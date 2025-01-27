@@ -6,10 +6,9 @@ require_once '../seguridad/conexion.php';
 $db = new conexion();
 $conexion = $db->getConexion();
 
-//si el usuario ya está logeado, redirigirlo al index
+//si el usuario ya está logeado, redirigirlo al login
 if (isset($_SESSION['registrado'])) {
     header('Location: login.php');
-    exit();
 }
 
 //funcion para registrar al usuario

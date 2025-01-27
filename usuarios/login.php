@@ -8,10 +8,14 @@ $db = new conexion();
 $conexion = $db->getConexion();
 $segura = new seguridad($conexion);
 
-//si el usuario no esta registrad, redirigirlo a que se registre
+//si el usuario no esta registrado, redirigirlo a que se registre
 if (!isset($_SESSION['registrado'])) {
     header('Location: ./registro.php');
-    exit();
+}
+
+//si el usuario se ha logeado redirigirlo al index
+if(isset($_SESSION['logeado'])){
+    header('Location: ../index.php');
 }
 
 if (isset($_POST['login'])) {
