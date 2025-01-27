@@ -48,7 +48,7 @@ class seguridad {
                 $this->session = true;
                 $this->usuario = $usuario['login'];
                 $this->rol = $usuario['rol'];
-    
+                echo "FUnciona";
                 return true; // Login exitoso
             }
         }

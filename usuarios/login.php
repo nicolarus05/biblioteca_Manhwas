@@ -10,19 +10,18 @@ $segura = new seguridad($conexion);
 
 //si el usuario no esta registrad, redirigirlo a que se registre
 if (!isset($_SESSION['registrado'])) {
-    header('Location: registro.php');
+    header('Location: ./registro.php');
     exit();
 }
 
 if (isset($_POST['login'])) {
 
     //verifico que los datos no son nulos
-    if (!empty($usuario) && !empty($password)) {
+    if (!is_null($_POST['usuario']) || !is_null($_POST['password'])) {
         //verificamos si el usuario existe
-        if ($segura->login($usuario, $password)) {
+        if ($segura->login($_POST['usuario'], $_POST['password'])) {
             $_SESSION['logeado'] = true;
             header('Location: ../index.php');
-            exit();
         } else {
             echo "El usuario o la contraseña son incorrectos.";
         }
@@ -42,7 +41,7 @@ if (isset($_POST['login'])) {
     <link rel="stylesheet" href="../css/login.css">
 </head>
 <body>
-    <form action="post">
+    <form action="" method="post">
         <h1>Inicio de Sesión</h1>
         <fieldset>
             <legend>Inicio de Sesión</legend>
