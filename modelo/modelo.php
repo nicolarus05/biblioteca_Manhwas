@@ -36,4 +36,22 @@ class modelo{
     }
 
     //me creo un metodo para eliminar algo de alguna tabla
+    public function eliminar($columna, $valor){
+        try {
+            $query = 'DELETE FROM ' . $this->tabla . ' WHERE ' . $columna . ' = :valor';
+            $stmt = $this->conexion->prepare($query);
+            $stmt->bindParam(':valor', $valor);
+            $stmt->execute();
+    
+            //verificamos si se ha eliminado
+            if ($stmt->rowCount() > 0) {
+                echo "Recurso eliminado correctamente.";
+            } else {
+                echo "No se encontró el recurso para eliminar.";
+            }
+        } catch (PDOException $e) {
+            echo "Error al recurso usuario: " . $e->getMessage();
+        }
+
+    }
 }
