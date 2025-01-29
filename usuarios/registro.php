@@ -23,7 +23,7 @@ function registro($conexion, $nombre, $apellidos, $edad, $correo, $login, $passw
 
         //si el usuario se ha creado con exito, redirigirlo para que incie sesion
         $_SESSION['registrado'] = true;
-        header('Location: login.php'); //redirigir al login
+        header('Location: ../vista/login.php'); //redirigir al login
         exit();
     } catch (Exception $e) {
         echo "Error al registrar usuario: " . $e->getMessage();
@@ -89,4 +89,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </form>
 </body>
 </html>
-
