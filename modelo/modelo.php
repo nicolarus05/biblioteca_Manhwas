@@ -1,5 +1,5 @@
 <?php
-class modelo{
+class Modelo{
     //nombre de la tabla a la que se accede
     protected $tabla;
 
