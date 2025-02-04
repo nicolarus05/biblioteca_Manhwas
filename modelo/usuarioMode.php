@@ -1,6 +1,6 @@
 <?php
 require_once 'modelo.php';
-require_once 'seguridad.php';
+require_once '../seguridad/seguridad.php';
 
 class Usuario extends Modelo {
     // Constructor de la clase
