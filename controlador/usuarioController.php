@@ -4,12 +4,52 @@ require_once '../modelo/usuarioMode.php';
 class UsuarioController {
     
     private $usuarioModel;
-
+    
     public function __construct() {
         //instanciamos el modelo Usuario
         $this->usuarioModel = new Usuario();
     }
+    //metodo para manejar otras acciones (si es necesario)
+    public function manejarAcciones() {
+        //verificamos qué acción se está solicitando y llamamos al método adecuado
+        if (isset($_GET['accion'])) {
+            switch ($_GET['accion']) {
+                case 'registrar':
+                    
+                    break;
+                case 'login':
+                    if (!isset($_SESSION['registrado'])) {
+                        header('Location: ../vista/viewRegistro.php');
+                    }else{
+                        if(isset($_POST['login'])){
+                            //verifico que los datos no son nulos
+                            if (!is_null($_POST['usuario']) || !is_null($_POST['password'])) {
+                                //verificamos si el usuario existe
+                                if ($this->usuarioModel->login($_POST['usuario'], $_POST['password'])) {
+                                    $_SESSION['logeado'] = true;
+                                    header('Location: ../index.php');
+                                } else {
+                                    echo "El usuario o la contraseña son incorrectos.";
+                                }
+                            } else {
+                                echo "Por favor, rellene todos los campos.";
+                            }
+                        }
+                    }
+                    break;
+                case 'actualizarPerfil':
+                    
+                    break;
+                case 'cambiarPassword':
+                    
+                    break;
+                default:
+                    echo "Acción no encontrada.";
+            }
+        }
+    }
 
+    /* 
     //metodo para registrar un nuevo usuario
     public function registrar() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['nombre'], $_POST['apellidos'], $_POST['edad'], $_POST['correo'], $_POST['login'], $_POST['password'])) {
@@ -72,27 +112,5 @@ class UsuarioController {
             echo "Faltan datos para cambiar la contraseña.";
         }
     }
-
-    //metodo para manejar otras acciones (si es necesario)
-    public function manejarAcciones() {
-        //verificamos qué acción se está solicitando y llamamos al método adecuado
-        if (isset($_GET['accion'])) {
-            switch ($_GET['accion']) {
-                case 'registrar':
-                    $this->registrar();
-                    break;
-                case 'login':
-                    $this->login();
-                    break;
-                case 'actualizarPerfil':
-                    $this->actualizarPerfil();
-                    break;
-                case 'cambiarPassword':
-                    $this->cambiarPassword();
-                    break;
-                default:
-                    echo "Acción no encontrada.";
-            }
-        }
-    }
+ */
 }

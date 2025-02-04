@@ -6,3 +6,6 @@
  * Hacer apartado +18 para los usuarios que sean mayores de edad.
  * Añadir al login verificacion por correo.
  */
+
+
+ Refactorizar todo el codigo de seguridad para implementarlo en usuarioMode.php, y reestructurar el usuarioController

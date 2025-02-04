@@ -3,9 +3,16 @@ require_once 'modelo.php';
 require_once '../seguridad/seguridad.php';
 
 class Usuario extends Modelo {
+    //atributos privados de la clase
+    private $session;
+    private $usuario;
+    private $rol;
     // Constructor de la clase
     public function __construct() {
         parent::__construct('usuario');
+        $this->session = false;
+        $this->usuario = "";
+        $this->rol = "";
     }
 
     //metodo para añadir usuarios
@@ -60,14 +67,44 @@ class Usuario extends Modelo {
     }
 
     //metodo para loguear a los usuarios
-    public function login($usuario, $password) {
+    public function login($login, $password) {
         $segura = new Seguridad($this->conexion);
         
-        if ($segura->login($usuario, $password)) {
-            $_SESSION['logeado'] = true;
-            header('Location: ../index.php');
-        } else {
-            echo "El usuario o la contraseña son incorrectos.";
+        // Sanitizamos el campo de entrada
+        $login = filter_var($login, FILTER_SANITIZE_STRING);
+    
+        // Consulta segura con parámetros preparados
+        $sql = "select * FROM usuario WHERE login = :login";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':login', $login, PDO::PARAM_STR);
+        $stmt->execute();
+    
+        // Obtenemos el usuario (si existe)
+        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        if ($usuario) {
+            // Verificamos la contraseña concatenando el salt y utilizando password_verify
+            if (password_verify($password . $usuario['salt'], $usuario['password'])) {
+                // Configuramos variables de sesión
+                $_SESSION['usuario'] = $usuario['login'];
+                $_SESSION['rol'] = $usuario['rol'];
+    
+                // Guardamos estado en las propiedades de la clase
+                $this->session = true;
+                $this->usuario = $usuario['login'];
+                $this->rol = $usuario['rol'];
+                return true; // Login exitoso
+            }
         }
+    
+        return false; // Credenciales incorrectas
+    }
+
+    //metodo para cerrar sesion
+    public function logout() {
+        $this->session = false;
+        $this->usuario = "";
+        session_unset();
+        session_destroy();
     }
 }

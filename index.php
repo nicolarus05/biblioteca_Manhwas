@@ -3,9 +3,18 @@ session_start();
 
 require_once './seguridad/conexion.php';
 require_once './seguridad/seguridad.php';
+require_once './modelo/usuarioMode.php';
+$usuarioMode = new Usuario();
 $segura = new Seguridad(new conexion);
 
+if(isset($_POST['login'])){
+    $usuario = $_POST['login'];
+    $password = $_POST['password'];
 
+    if($usuarioMode->login($login, $password)){
+        $_GET['vista'] = './vista/viewPrueba.php';
+    }
+}
 ?>
 
 <!DOCTYPE html>
