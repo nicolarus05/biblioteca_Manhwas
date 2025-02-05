@@ -15,7 +15,11 @@ class UsuarioController {
         if (isset($_GET['accion'])) {
             switch ($_GET['accion']) {
                 case 'registrar':
-                    
+                    if (isset($_SESSION['registrado'])) {
+                        header('Location: ../vista/viewLogin.php');
+                    }else{
+                        $this->usuarioModel->registro($_POST['nombre'], $_POST['apellidos'], $_POST['edad'], $_POST['correo'], $_POST['login'], $_POST['password']);
+                    }
                     break;
                 case 'login':
                     if (!isset($_SESSION['registrado'])) {

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../css/login.css">
 </head>
 <body>
-    <form action="../controlador/usuarioController.php" method="post">
+    <form action="" method="post">
         <h1>Inicio de Sesión</h1>
         <fieldset>
             <legend>Inicio de Sesión</legend>

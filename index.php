@@ -15,6 +15,12 @@ if(isset($_POST['login'])){
         $_GET['vista'] = './vista/viewPrueba.php';
     }
 }
+
+if(isset($_SESSION['logeado'])){
+    switch(){
+        
+    }
+}
 ?>
 
 <!DOCTYPE html>

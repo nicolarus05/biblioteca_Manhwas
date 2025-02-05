@@ -1,6 +1,5 @@
 <?php
 require_once 'modelo.php';
-require_once '../seguridad/seguridad.php';
 
 class Usuario extends Modelo {
     //atributos privados de la clase
