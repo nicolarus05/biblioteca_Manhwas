@@ -1,17 +1,22 @@
 <?php
 require_once 'modelo.php';
+require_once '../seguridad/conexion.php';
 
 class Usuario extends Modelo {
     //atributos privados de la clase
     private $session;
     private $usuario;
     private $rol;
+    private $db;
+    private $conexion;
     // Constructor de la clase
     public function __construct() {
         parent::__construct('usuario');
         $this->session = false;
         $this->usuario = "";
         $this->rol = "";
+        $this->db = new conexion;
+        $this->conexion = $this->db->getConexion();
     }
 
     //metodo para añadir usuarios
@@ -56,13 +61,22 @@ class Usuario extends Modelo {
     }
 
     //metodo para registrar un usuario
-    public function registro($nombre, $apellidos, $edad, $correo, $login, $password) {
-        if ($this->crear($nombre, $apellidos, $edad, $correo, $login, $password)) {
-            $_SESSION['registrado'] = true;
-            header('Location: ../vista/login.php');
-        } else {
-            echo "Error al registrar usuario.";
-        }
+    public  static function registro($nombre, $apellidos, $edad, $correo, $login, $password) {
+        $salt=random_int(10000000,99999999);
+    $password = password_hash($password.$salt,PASSWORD_DEFAULT);
+
+    try {
+        $stmt = $conexion->prepare("INSERT INTO usuario (nombre, apellidos, edad, correo, login, password, salt, rol) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, 'usuario')");
+        $stmt->execute([$nombre, $apellidos, $edad, $correo, $login, $password, $salt]);
+
+        //si el usuario se ha creado con exito, redirigirlo para que incie sesion
+        $_SESSION['registrado'] = true;
+        header('Location: ../vista/login.php'); //redirigir al login
+        exit();
+    } catch (Exception $e) {
+        echo "Error al registrar usuario: " . $e->getMessage();
+    }
     }
 
     //metodo para loguear a los usuarios

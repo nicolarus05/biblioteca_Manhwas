@@ -4,7 +4,8 @@ session_start();
 require_once './seguridad/conexion.php';
 require_once './seguridad/seguridad.php';
 require_once './modelo/usuarioMode.php';
-$usuarioMode = new Usuario();
+require_once './vista/view.php';
+$usuarioController = new UsuarioController();
 $segura = new Seguridad(new conexion);
 
 if(isset($_POST['login'])){
@@ -17,8 +18,15 @@ if(isset($_POST['login'])){
 }
 
 if(isset($_SESSION['logeado'])){
-    switch(){
-        
+    switch($vista){
+        case 'login':
+            $usuarioController->manejarAcciones();
+
+        default: 
+        if(!isset($_SESSION['logeado'])){
+            $datos = $segura->getRol();
+            View::mostrar('viewPrueba', $datos);
+        }
     }
 }
 ?>
